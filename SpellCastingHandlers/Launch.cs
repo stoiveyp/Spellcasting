@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Alexa.NET;
+﻿using Alexa.NET;
 using Alexa.NET.Request;
 using Alexa.NET.RequestHandlers;
 using Alexa.NET.RequestHandlers.Handlers;
@@ -10,14 +8,19 @@ namespace SpellCastingHandlers
 {
     public class Launch:LaunchSynchronousRequestHandler<APLSkillRequest>
     {
-        private const string launchText = "Welcome to spell caster, how many dice would you like me to roll?";
-        private const string reprompt = "How many dice would you like me to roll?";
+        private readonly string _launchText;
+        private const string Reprompt = "How many dice would you like me to roll?";
+
+        public Launch(string appName) : base()
+        {
+            _launchText = $"Welcome to {appName}, how many dice would you like me to roll?";
+        }
 
         public override SkillResponse HandleSyncRequest(AlexaRequestInformation<APLSkillRequest> information)
         {
             return ResponseBuilder.Ask(
-                launchText,
-                new Reprompt(reprompt));
+                _launchText,
+                new Reprompt(Reprompt));
         }
     }
 }
