@@ -1,12 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using Alexa.NET;
+﻿using Alexa.NET;
 using Alexa.NET.Request;
 using Alexa.NET.Request.Type;
 using Alexa.NET.RequestHandlers;
 using Alexa.NET.RequestHandlers.Handlers;
 using Alexa.NET.Response;
-using SpellCastingLogic;
 
 namespace SpellCastingHandlers
 {
@@ -24,7 +21,6 @@ If you need to make the same roll again just say 'roll again'. You can try now b
 
         public override SkillResponse HandleSyncRequest(AlexaRequestInformation<APLSkillRequest> information)
         {
-
             return ResponseBuilder.Ask(welcomeText, new Reprompt(reprompt));
         }
     }
