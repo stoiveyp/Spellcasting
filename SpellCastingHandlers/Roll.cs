@@ -55,8 +55,8 @@ namespace SpellCastingHandlers
         public static DiceRollerResult GetResult(SkillRequest skillRequest)
         {
             var slots = ((IntentRequest)skillRequest.Request).Intent.Slots;
-            var number = int.Parse(slots[SlotNames.Number].Value);
-            var sides = int.Parse(slots[SlotNames.Side].Value);
+            var number = slots.GetInt(SlotNames.Number);
+            var sides = slots.GetInt(SlotNames.Side);
             return GetResult(new DiceRollerRequest(number, sides));
         }
         public static DiceRollerResult GetResult(DiceRollerRequest request)
