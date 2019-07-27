@@ -29,7 +29,11 @@ namespace SpeechOnly
             new[]
             {
                 new NoRequestHandlerFound()
-            }
+            },
+            new[]
+            {
+                new SessionStateInterceptor()
+            }, null
         );
 
 
