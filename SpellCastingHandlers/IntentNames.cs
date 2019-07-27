@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SpellCastingHandlers
+﻿namespace SpellCastingHandlers
 {
     public static class IntentNames
     {
+        public const string RollAgain = "rollagain";
         public const string Roll = "roll";
+        public const string Breakdown = "breakdown";
     }
 }

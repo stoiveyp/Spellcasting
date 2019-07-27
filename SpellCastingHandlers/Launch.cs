@@ -8,16 +8,16 @@ using Alexa.NET.Response;
 
 namespace SpellCastingHandlers
 {
-    public class Launch:LaunchRequestHandler<APLSkillRequest>
+    public class Launch:LaunchSynchronousRequestHandler<APLSkillRequest>
     {
         private const string launchText = "Welcome to spell caster, how many dice would you like me to roll?";
         private const string reprompt = "How many dice would you like me to roll?";
 
-        public override Task<SkillResponse> Handle(AlexaRequestInformation<APLSkillRequest> information)
+        public override SkillResponse HandleSyncRequest(AlexaRequestInformation<APLSkillRequest> information)
         {
-            return Task.FromResult(ResponseBuilder.Ask(
+            return ResponseBuilder.Ask(
                 launchText,
-                new Reprompt(reprompt)));
+                new Reprompt(reprompt));
         }
     }
 }

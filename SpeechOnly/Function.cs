@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Alexa.NET.Request;
+using Alexa.NET.Request.Type;
 using Alexa.NET.RequestHandlers;
 using Alexa.NET.Response;
 using Amazon.Lambda.Core;
@@ -17,13 +18,21 @@ namespace SpeechOnly
             new IAlexaRequestHandler<APLSkillRequest>[]
             {
                 new Launch(),
-                new Help(), 
-                new Fallback()
+                new Roll(),
+                new RollAgain(),
+                new Breakdown(),
+                new Help(),
+                new Fallback(),
+                new SessionEnded()
+            },
+            new[]
+            {
+                new NoRequestHandlerFound()
             }
         );
-        
 
-        public Task<SkillResponse> FunctionHandler(APLSkillRequest input, ILambdaContext context)
+
+        public Task<SkillResponse> FunctionHandler(APLSkillRequest input, ILambdaContext _)
         {
             return _pipeline.Process(input);
         }
