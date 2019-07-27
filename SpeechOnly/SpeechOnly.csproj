@@ -5,11 +5,17 @@
     <AWSProjectType>Lambda</AWSProjectType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Alexa.NET.RequestHandlers" Version="3.1.0" />
+    <PackageReference Include="Alexa.NET.APL" Version="4.0.11" />
+    <PackageReference Include="Alexa.NET.RequestHandlers" Version="4.0.0" />
     <PackageReference Include="Amazon.Lambda.Core" Version="1.1.0" />
     <PackageReference Include="Amazon.Lambda.Serialization.Json" Version="1.5.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpellCastingHandlers\SpellCastingHandlers.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="JackInTheBox.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
