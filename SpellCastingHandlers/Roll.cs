@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Alexa.NET;
+using Alexa.NET.APL;
+using Alexa.NET.APL.Commands;
 using Alexa.NET.APL.Components;
 using Alexa.NET.Request;
 using Alexa.NET.Request.Type;
@@ -13,7 +15,7 @@ using SpellCastingLogic;
 
 namespace SpellCastingHandlers
 {
-    public class Roll:SynchronousRequestHandler<APLSkillRequest>
+    public class Roll : SynchronousRequestHandler<APLSkillRequest>
     {
         public override bool CanHandle(AlexaRequestInformation<APLSkillRequest> information)
         {
@@ -30,9 +32,9 @@ namespace SpellCastingHandlers
         private void SetDefaults(IntentRequest intentRequest)
         {
             var slots = intentRequest.Intent.Slots ?? (intentRequest.Intent.Slots = new Dictionary<string, Slot>());
-            
-            slots.AddIfNotExist(SlotNames.Number,1.ToString());
-            slots.AddIfNotExist(SlotNames.Side,6.ToString());
+
+            slots.AddIfNotExist(SlotNames.Number, 1.ToString());
+            slots.AddIfNotExist(SlotNames.Side, 6.ToString());
         }
 
         public override SkillResponse HandleSyncRequest(AlexaRequestInformation<APLSkillRequest> information)
@@ -44,7 +46,7 @@ namespace SpellCastingHandlers
         {
             var result = GetResult(information.SkillRequest);
             information.State.SetSession(SessionKeys.LastRoll, result);
-            return GetResponse(result,information.SkillRequest.SupportsAPL1_1());
+            return GetResponse(result, information.SkillRequest.SupportsAPL1_1());
         }
 
         private const string reprompt = "If you'd like me to roll again, just say 'roll again'";
@@ -52,12 +54,12 @@ namespace SpellCastingHandlers
         public static SkillResponse GetResponse(DiceRollerResult result, bool includeApl)
         {
             var response = $"You rolled {result.Total}";
-            var ask = ResponseBuilder.Ask(response,new Reprompt(reprompt));
+            var ask = ResponseBuilder.Ask(response, new Reprompt(reprompt));
 
             if (includeApl)
             {
                 var doc = GenerateRollDisplay(result);
-                ask.Response.Directives.Add(new RenderDocumentDirective{Document = doc});
+                ask.Response.Directives.Add(new RenderDocumentDirective { Document = doc });
             }
 
             return ask;
@@ -65,15 +67,25 @@ namespace SpellCastingHandlers
 
         private static APLDocument GenerateRollDisplay(DiceRollerResult result)
         {
+            //TODO: Get it to play <audio src="soundbank://soundlibrary/toys_games/board_games/board_games_08"/>
             var doc = new APLDocument(APLDocumentVersion.V1_1);
             Import.AlexaLayouts.Into(doc);
+            new Import {
+                Name ="transitions",
+                Source = "https://rollcasterassets.s3-eu-west-1.amazonaws.com/apl_transitions.json" }
+                .Into(doc);
+
             doc.MainTemplate = new Layout(new AlexaHeadline
             {
                 BackgroundImageSource = "https://rollcasterassets.s3-eu-west-1.amazonaws.com/backg_shrunk.jpg",
                 BackgroundBlur = true,
                 HeaderBackButton = false,
                 PrimaryText = $"You rolled {result.Total}",
-                SecondaryText = string.Join(" + ",result.Dice.Select(d => d.ToString()))
+                SecondaryText = string.Join(" + ", result.Dice.Select(d => d.ToString())),
+                OnMount = new APLValue<IList<APLCommand>>(new APLCommand[]
+                {
+                    new CustomCommand("rollIn")
+                })
 
             }).AsMain();
             return doc;
