@@ -26,7 +26,7 @@ namespace SpellCastingHandlers
 
             var result = Roll.GetResult(lastResult.Request);
             information.State.SetSession(SessionKeys.LastRoll, result);
-            return Roll.GetResponse(result);
+            return Roll.GetResponse(result, information.SkillRequest.SupportsAPL1_1());
         }
 
         private const string _noLastRoll = "I can't find the last roll you made in this session, what roll would you like to make?";

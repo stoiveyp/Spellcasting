@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Alexa.NET;
+using Alexa.NET.APL.Components;
 using Alexa.NET.Request;
 using Alexa.NET.Request.Type;
 using Alexa.NET.RequestHandlers;
 using Alexa.NET.RequestHandlers.Handlers;
 using Alexa.NET.Response;
+using Alexa.NET.Response.APL;
 using SpellCastingLogic;
 
 namespace SpellCastingHandlers
@@ -41,15 +44,39 @@ namespace SpellCastingHandlers
         {
             var result = GetResult(information.SkillRequest);
             information.State.SetSession(SessionKeys.LastRoll, result);
-            return GetResponse(result);
+            return GetResponse(result,information.SkillRequest.SupportsAPL1_1());
         }
 
         private const string reprompt = "If you'd like me to roll again, just say 'roll again'";
 
-        public static SkillResponse GetResponse(DiceRollerResult result)
+        public static SkillResponse GetResponse(DiceRollerResult result, bool includeApl)
         {
             var response = $"You rolled {result.Total}";
-            return ResponseBuilder.Ask(response,new Reprompt(reprompt));
+            var ask = ResponseBuilder.Ask(response,new Reprompt(reprompt));
+
+            if (includeApl)
+            {
+                var doc = GenerateRollDisplay(result);
+                ask.Response.Directives.Add(new RenderDocumentDirective{Document = doc});
+            }
+
+            return ask;
+        }
+
+        private static APLDocument GenerateRollDisplay(DiceRollerResult result)
+        {
+            var doc = new APLDocument(APLDocumentVersion.V1_1);
+            Import.AlexaLayouts.Into(doc);
+            doc.MainTemplate = new Layout(new AlexaHeadline
+            {
+                BackgroundImageSource = "https://rollcasterassets.s3-eu-west-1.amazonaws.com/backg_shrunk.jpg",
+                BackgroundBlur = true,
+                HeaderBackButton = false,
+                PrimaryText = $"You rolled {result.Total}",
+                SecondaryText = string.Join(" + ",result.Dice.Select(d => d.ToString()))
+
+            }).AsMain();
+            return doc;
         }
 
         public static DiceRollerResult GetResult(SkillRequest skillRequest)

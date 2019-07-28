@@ -2,11 +2,18 @@
 using System.Collections.Generic;
 using Alexa.NET.Request;
 using Alexa.NET.Request.Type;
+using Alexa.NET.Response.APL;
 
 namespace SpellCastingHandlers
 {
     public static class SkillRequestExtension
     {
+        public static bool SupportsAPL1_1(this SkillRequest request)
+        {
+            var details = request.APLInterfaceDetails();
+            return details == null || details.Runtime.MaxVersion > APLDocumentVersion.V1;
+        }
+
         public static bool IsIntentName<T>(this T request, string intentName) where T:SkillRequest
         {
             return request.Request is IntentRequest intent &&
