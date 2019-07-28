@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpellCastingHandlers", "Spe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{4A8CA8F7-2919-4D97-A8F3-07ADB3EB0003}"
 	ProjectSection(SolutionItems) = preProject
+		assets\apl_transitions.json = assets\apl_transitions.json
+		assets\guillermo-ferla-P8gh-GR0dDs-unsplash.jpg = assets\guillermo-ferla-P8gh-GR0dDs-unsplash.jpg
 		assets\logo_108.png = assets\logo_108.png
 		assets\logo_512.png = assets\logo_512.png
 		assets\logo_large.png = assets\logo_large.png
