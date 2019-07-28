@@ -13,7 +13,7 @@ namespace SpeechOnly
 {
     public class Function
     {
-        private const string appName = "spell caster";
+        private const string appName = "roll caster";
         private readonly AlexaRequestPipeline<APLSkillRequest> _pipeline = new AlexaRequestPipeline<APLSkillRequest>
         (
             new IAlexaRequestHandler<APLSkillRequest>[]
