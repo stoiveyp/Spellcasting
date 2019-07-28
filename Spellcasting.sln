@@ -11,9 +11,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeechOnly", "SpeechOnly\SpeechOnly.csproj", "{EFF536B8-8496-4F44-AEAF-6A451660AEC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpellCastingLogic", "SpellCastingLogic\SpellCastingLogic.csproj", "{1DFE32C1-F56D-4956-9912-C702528EB1DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpellCastingLogic", "SpellCastingLogic\SpellCastingLogic.csproj", "{1DFE32C1-F56D-4956-9912-C702528EB1DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpellCastingHandlers", "SpellCastingHandlers\SpellCastingHandlers.csproj", "{4A16620E-4CAD-4C1B-B9A1-67E757F7763D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpellCastingHandlers", "SpellCastingHandlers\SpellCastingHandlers.csproj", "{4A16620E-4CAD-4C1B-B9A1-67E757F7763D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{4A8CA8F7-2919-4D97-A8F3-07ADB3EB0003}"
+	ProjectSection(SolutionItems) = preProject
+		assets\logo_108.png = assets\logo_108.png
+		assets\logo_512.png = assets\logo_512.png
+		assets\logo_large.png = assets\logo_large.png
+		assets\noun_Dice_200608.png = assets\noun_Dice_200608.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
