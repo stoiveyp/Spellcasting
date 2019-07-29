@@ -1,13 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Alexa.NET.APL" Version="4.0.7" />
+    <PackageReference Include="Alexa.NET.APL" Version="4.0.13" />
     <PackageReference Include="Alexa.NET.InSkillPricing" Version="2.1.0" />
-    <PackageReference Include="Alexa.NET.RequestHandlers" Version="3.1.0" />
+    <PackageReference Include="Alexa.NET.RequestHandlers" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>
