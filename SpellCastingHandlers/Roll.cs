@@ -72,6 +72,7 @@ namespace SpellCastingHandlers
             Import.AlexaLayouts.Into(doc);
             new Import {
                 Name ="transitions",
+                Version="1.0.0",
                 Source = "https://rollcasterassets.s3-eu-west-1.amazonaws.com/apl_transitions.json" }
                 .Into(doc);
 
