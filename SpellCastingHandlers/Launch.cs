@@ -18,6 +18,7 @@ namespace SpellCastingHandlers
 
         public override SkillResponse HandleSyncRequest(AlexaRequestInformation<APLSkillRequest> information)
         {
+            //TODO: Product Lookup to see if they have roll history
             return ResponseBuilder.Ask(
                 _launchText,
                 new Reprompt(Reprompt));

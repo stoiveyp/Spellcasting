@@ -30,8 +30,9 @@ namespace SpeechOnly
             {
                 new NoRequestHandlerFound()
             },
-            new[]
+            new IAlexaRequestInterceptor<APLSkillRequest>[]
             {
+                new ProductStateInterceptor(),
                 new SessionStateInterceptor()
             }, null
         );
