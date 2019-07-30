@@ -14,28 +14,7 @@ namespace SpeechOnly
     public class Function
     {
         private const string appName = "roll caster";
-        private readonly AlexaRequestPipeline<APLSkillRequest> _pipeline = new AlexaRequestPipeline<APLSkillRequest>
-        (
-            new IAlexaRequestHandler<APLSkillRequest>[]
-            {
-                new Launch(appName),
-                new Roll(),
-                new RollAgain(),
-                new Breakdown(),
-                new Help(appName),
-                new Fallback(),
-                new SessionEnded()
-            },
-            new[]
-            {
-                new NoRequestHandlerFound()
-            },
-            new IAlexaRequestInterceptor<APLSkillRequest>[]
-            {
-                new ProductStateInterceptor(),
-                new SessionStateInterceptor()
-            }, null
-        );
+        private readonly AlexaRequestPipeline<APLSkillRequest> _pipeline = SkillPipeline.Create(appName);
 
 
         public Task<SkillResponse> FunctionHandler(APLSkillRequest input, ILambdaContext _)

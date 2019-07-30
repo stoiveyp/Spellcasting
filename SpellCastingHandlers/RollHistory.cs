@@ -17,7 +17,7 @@ namespace SpellCastingHandlers
 
         public override Task<SkillResponse> Handle(AlexaRequestInformation<APLSkillRequest> information)
         {
-
+            throw new NotImplementedException();
         }
     }
 }
