@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Alexa.NET;
 using Alexa.NET.APL;
 using Alexa.NET.APL.Commands;
@@ -16,9 +17,9 @@ using SpellCastingLogic;
 
 namespace SpellCastingHandlers
 {
-    public class Roll : SynchronousRequestHandler<APLSkillRequest>
+    public class Roll : IAlexaRequestHandler<APLSkillRequest>
     {
-        public override bool CanHandle(AlexaRequestInformation<APLSkillRequest> information)
+        public bool CanHandle(AlexaRequestInformation<APLSkillRequest> information)
         {
             if (!information.SkillRequest.IsIntentName(IntentNames.Roll))
             {
@@ -38,26 +39,22 @@ namespace SpellCastingHandlers
             slots.AddIfNotExist(SlotNames.Side, 6.ToString());
         }
 
-        public override SkillResponse HandleSyncRequest(AlexaRequestInformation<APLSkillRequest> information)
-        {
-            return GenerateRoll(information);
-        }
-
-        public static SkillResponse GenerateRoll(AlexaRequestInformation<APLSkillRequest> information)
+        public static Task<SkillResponse> GenerateRoll(AlexaRequestInformation<APLSkillRequest> information)
         {
             var result = GetResult(information.SkillRequest);
-            information.State.SetSession(SessionKeys.LastRoll, result);
-            return GetResponse(result, information.SkillRequest.SupportsAPL1_1());
+            return GetResponse(information, result);
         }
 
         private const string reprompt = "If you'd like me to roll again, just say 'roll again'";
 
-        public static SkillResponse GetResponse(DiceRollerResult result, bool includeApl)
+        public static async Task<SkillResponse> GetResponse(AlexaRequestInformation<APLSkillRequest> information, DiceRollerResult result)
         {
+            information.State.SetSession(StateKeys.LastRoll, result);
+            await ActiveRollHistory.SaveRoll(information, result);
             var response = $"You rolled {result.Total}";
             var ask = ResponseBuilder.Ask(response, new Reprompt(reprompt));
 
-            if (includeApl)
+            if (information.SkillRequest.SupportsAPL1_1())
             {
                 ask.Response.Directives.Add(new RenderDocumentDirective
                 {
@@ -79,11 +76,5 @@ namespace SpellCastingHandlers
         {
             return DiceRoller.Roll(request);
         }
-    }
-
-    public static class SessionKeys
-    {
-        public const string LastRoll = "lastRoll";
-        public const string Products = "products";
     }
 }

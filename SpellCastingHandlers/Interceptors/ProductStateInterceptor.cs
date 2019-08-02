@@ -20,7 +20,7 @@ namespace SpellCastingHandlers
 
         private async Task GetProduct(AlexaRequestInformation<APLSkillRequest> information)
         {
-            var product = information.State.GetSession<InSkillProduct[]>(SessionKeys.Products);
+            var product = information.State.GetSession<InSkillProduct[]>(StateKeys.Products);
 
             if (product != null)
             {
@@ -29,7 +29,7 @@ namespace SpellCastingHandlers
 
             var client = new InSkillProductsClient(information.SkillRequest);
             var response = await client.GetProducts();
-            information.State.SetSession("products",response.Products);
+            information.State.SetSession(StateKeys.Products,response.Products);
         }
     }
 }
