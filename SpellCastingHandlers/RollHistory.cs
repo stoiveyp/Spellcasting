@@ -18,12 +18,12 @@ namespace SpellCastingHandlers
 
         public RollHistory(string appName) : base(IntentNames.RollHistory)
         {
-            AppName = appName;
+            _appName = appName;
         }
 
         public override Task<SkillResponse> Handle(AlexaRequestInformation<APLSkillRequest> information)
         {
-            var historyProduct = ActiveRollHistory.GetProduct();
+            var historyProduct = ActiveRollHistory.GetProduct(information);
 
             if (historyProduct.Entitled == Entitlement.Entitled)
             {

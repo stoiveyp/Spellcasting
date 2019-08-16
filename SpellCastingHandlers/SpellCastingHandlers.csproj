@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Alexa.NET.APL" Version="4.0.13" />
-    <PackageReference Include="Alexa.NET.InSkillPricing" Version="2.1.0" />
+    <PackageReference Include="Alexa.NET.APL" Version="4.2.0" />
+    <PackageReference Include="Alexa.NET.InSkillPricing" Version="2.2.0" />
     <PackageReference Include="Alexa.NET.RequestHandlers" Version="4.0.0" />
   </ItemGroup>
 

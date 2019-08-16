@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Alexa.NET;
-using Alexa.NET.APL;
-using Alexa.NET.APL.Commands;
-using Alexa.NET.APL.Components;
 using Alexa.NET.Request;
 using Alexa.NET.Request.Type;
 using Alexa.NET.RequestHandlers;
-using Alexa.NET.RequestHandlers.Handlers;
 using Alexa.NET.Response;
-using Alexa.NET.Response.APL;
 using SpellCastingHandlers.APL;
 using SpellCastingLogic;
 
@@ -29,6 +22,11 @@ namespace SpellCastingHandlers
             SetDefaults(information.SkillRequest.Request as IntentRequest);
 
             return true;
+        }
+
+        public Task<SkillResponse> Handle(AlexaRequestInformation<APLSkillRequest> information)
+        {
+            return GenerateRoll(information);
         }
 
         private void SetDefaults(IntentRequest intentRequest)

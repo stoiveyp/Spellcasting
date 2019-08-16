@@ -6,6 +6,6 @@ namespace SpellCastingHandlers
 {
     public static class ProductNames
     {
-        public const string RollHistory = "rollhistory";
+        public const string RollHistory = "RollHistory";
     }
 }

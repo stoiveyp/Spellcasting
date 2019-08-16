@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Alexa.NET.InSkillPricing;
@@ -14,7 +15,7 @@ namespace SpellCastingHandlers
         public static InSkillProduct GetProduct<T>(AlexaRequestInformation<T> information) where T:SkillRequest
         {
             var products = information.State.GetSession<InSkillProduct[]>(StateKeys.Products);
-            return products.First(p => p.Name == ProductNames.RollHistory);
+            return products.First(p => p.ReferenceName == ProductNames.RollHistory);
         }
 
         public static async Task<Queue<DiceRollerResult>> GetHistory(AlexaRequestInformation<APLSkillRequest> information)
@@ -45,12 +46,14 @@ namespace SpellCastingHandlers
                 queue.Dequeue();
             }
 
+            //TODO: Set up persistent storage
             await information.State.SetPersistent(StateKeys.RollHistory, queue.ToArray());
         }
 
         public static Task<SkillResponse> GiveToUser(AlexaRequestInformation<APLSkillRequest> information)
         {
             //TODO: Display if available, last results always 
+            throw new NotImplementedException();
         }
     }
 }

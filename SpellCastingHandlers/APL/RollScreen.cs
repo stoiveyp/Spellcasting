@@ -17,13 +17,8 @@ namespace SpellCastingHandlers.APL
             //TODO: Get it to play <audio src="soundbank://soundlibrary/toys_games/board_games/board_games_08"/>
             var doc = new APLDocument(APLDocumentVersion.V1_1);
             Import.AlexaLayouts.Into(doc);
-            new Import
-                {
-                    Name = "transitions",
-                    Version = "1.0.0",
-                    Source = "https://rollcasterassets.s3-eu-west-1.amazonaws.com/apl_transitions.json"
-                }
-                .Into(doc);
+
+            doc.Commands = new Dictionary<string, CommandDefinition>{{"rollIn", RollInCommand}};
 
             doc.MainTemplate = new Layout(new AlexaHeadline
             {
@@ -32,9 +27,48 @@ namespace SpellCastingHandlers.APL
                 HeaderBackButton = false,
                 PrimaryText = $"You rolled {result.Total}",
                 SecondaryText = string.Join(" + ", result.Dice.Select(d => d.ToString())),
-                OnMount = new APLValue<IList<APLCommand>>(new APLCommand[] {new Transition("rollIn",2000)})
+                OnMount = new APLValue<IList<APLCommand>>(new APLCommand[] { new Transition("rollIn", 2000) })
             }).AsMain();
             return doc;
         }
+
+        public static CommandDefinition RollInCommand => new CommandDefinition
+        {
+            Parameters = new List<Parameter>
+            {
+                new Parameter("delay"),
+                new Parameter("duration")
+            },
+            Commands = new List<APLCommand>
+            {
+                new AnimateItem
+                {
+                    Duration = APLValue.To<int?>("${duration}"),
+                    DelayMilliseconds = APLValue.To<int?>("${delay || 0}"),
+                    Value = new List<AnimatedProperty>
+                    {
+                        new AnimatedOpacity{From=0,To=1},
+                        new AnimatedTransform{
+                            From = new List<APLTransform>
+                            {
+                                new APLTransform
+                                {
+                                    TranslateX = APLValue.To<double?>("-100%"),
+                                    Rotate = -120
+                                }
+                            },
+                            To = new List<APLTransform>
+                            {
+                                new APLTransform
+                                {
+                                    TranslateX = 0,
+                                    Rotate = 0
+                                }
+                            },
+                        }
+                    }
+                }
+            }
+        };
     }
 }
