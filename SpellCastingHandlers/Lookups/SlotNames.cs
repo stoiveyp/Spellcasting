@@ -9,5 +9,6 @@ namespace SpellCastingHandlers
     {
         public const string Side = "side";
         public const string Number = "number";
+        public const string ProductName = "productName";
     }
 }

@@ -18,6 +18,9 @@ namespace SpellCastingHandlers
                     new Roll(),
                     new RollAgain(),
                     new Breakdown(),
+                    new RollHistory(appName),
+                    new BuySpecificProduct(), 
+                    new BuyAnyProduct(), 
                     new Help(appName),
                     new Fallback(),
                     new SessionEnded()

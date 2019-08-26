@@ -48,12 +48,12 @@ namespace SpellCastingHandlers
             var token = Guid.NewGuid().ToString("N");
             //TODO: See why I'd need this if it's transactional state?
 
-            var buy = new BuyDirective(product.ProductId, token);
-            buy.Payload.UpsellMessage = "You can keep track of your last ten rolls and ask for detail about them";
-            //TODO: Check rules on this
+            var buy = new UpsellDirective(
+                product.ProductId,
+                token,
+                "You can keep track of your last ten rolls and ask for detail about them");
 
-
-            var upsell = ResponseBuilder.Ask($"Roll history is available as extra functionality in {_appName}", null);
+            var upsell = ResponseBuilder.Tell($"Roll history is available as extra functionality in {_appName}", null);
             upsell.Response.Directives.Add(buy);
 
             return Task.FromResult(upsell);
